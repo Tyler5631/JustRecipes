@@ -2,10 +2,7 @@ package com.example.JustRecipes.recipe;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -28,5 +25,17 @@ public class RecipeController {
                 recipeJSON.getSteps()
         );
         return this.recipeRepository.save(recipe);
+    }
+
+    @GetMapping
+    public @ResponseBody
+    Iterable<Recipe> getAllRecipes() {
+        return recipeRepository.findAll();
+    }
+
+    @GetMapping(path = "/{id}")
+    public @ResponseBody
+    Recipe getRecipeById(@PathVariable Long id) {
+        return recipeRepository.getOne(id);
     }
 }
